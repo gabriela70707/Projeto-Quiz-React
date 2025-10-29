@@ -1,5 +1,9 @@
 @use './variaveis' as *;
 
+body{
+  cursor: url('../assets/cursor.png') 0 0, auto;
+}
+
 .inicial {
   display: flex;
   flex-direction: column;
@@ -7,7 +11,7 @@
   justify-content: end;
   height: 100vh;
   gap: 20px;
-  background-image: url('../assets/bad-ice-cream.png'); // ou .png, .webp etc.
+  background-image: url('../assets/capa.webp'); // ou .png, .webp etc.
   background-size: cover; // ajusta a imagem para cobrir todo o elemento
   background-position: center; // centraliza a imagem
   background-repeat: no-repeat;

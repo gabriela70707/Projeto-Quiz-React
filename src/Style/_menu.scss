@@ -1,16 +1,22 @@
 @use './variaveis' as *;
 
 .menu {
-  position: fixed;
+   position: fixed;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 800px;
 
-  background: rgba(0, 0, 0, 0.7);
   border-radius: 1rem;
   padding: 1rem;
+  
+  //Deixar o fundo glass
+  background: rgba(0, 0, 0, 0.3); // mais transparente para parecer vidro
+  backdrop-filter: blur(10px);         // efeito de desfoque
+  -webkit-backdrop-filter: blur(10px); // compatibilidade com Safari
+  border: 1px solid rgba(255, 255, 255, 0.2); // borda leve para dar profundidade
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);  // sombra suave
 }
 
 .menu ul {
