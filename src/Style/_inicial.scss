@@ -1,45 +1,52 @@
 @use './variaveis' as *;
-.inicial {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    gap: 20px;
 
-    .logo {
-        height: 80%;
+.inicial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  height: 100vh;
+  gap: 20px;
+  background-image: url('../assets/bad-ice-cream.png'); // ou .png, .webp etc.
+  background-size: cover; // ajusta a imagem para cobrir todo o elemento
+  background-position: center; // centraliza a imagem
+  background-repeat: no-repeat;
+
+  .entrar {
+    background-image: url('../assets/botao.png');
+    background-size: cover; // cobre todo o botão
+    color: #000000;
+    padding: 15px 40px;
+    border: none;
+    
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: $sombrasBox;
+    justify-content: center;
+    margin-bottom: 7vh;
+    width: 18vw;
+
+    &:hover {
+      transform: scale(1.05);
+      background-image: url('../assets/botao.png');
+      background-size: cover; // cobre todo o botão
+      background-position: center; // centraliza a imagem
+      background-repeat: no-repeat; // evita repetição
+      color: #04010f;
     }
 
-    .entrar {
-        background: $botao-azul;
-        color: #fff;
-        padding: 15px 40px;
-        border: none;
-        border-radius: 30px;
-        font-size: 1.2rem;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: $sombrasBox;
-        transition: transform 0.2s, background 0.3s;
-        justify-content: center;
+    &:focus {
+      outline: 3px solid #ffd700;
+      outline-offset: 3px;
+    }
 
-        &:hover {
-            transform: scale(1.05);
-            background: $botao-amarelo;
-            color: #04010f;
-        }
 
-        &:focus {
-            outline: 3px solid #ffd700;
-            outline-offset: 3px;
-        }
-    
 
-    
 
-}
-@media (max-width: 768px) {
+  }
+
+  @media (max-width: 768px) {
     h1 {
       font-size: 2rem; // título menor em tablet
     }
