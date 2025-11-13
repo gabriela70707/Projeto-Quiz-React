@@ -1,4 +1,3 @@
-import logo from '../assets/bad-ice-cream.png';
 import { useNavigate } from 'react-router-dom';
 
 export function Inicial() {

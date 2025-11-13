@@ -5,31 +5,43 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
 export function Galeria() {
-    const [imagens, setImagens] = useState([
-        
-    ]);
+    const [fotos, setFotos] = useState(() => {
+        const salvas = localStorage.getItem("fotos");
+        return salvas ? JSON.parse(salvas) : [];
+    });
 
     // Função chamada pelo Camera
     const adicionarFoto = (novaFoto) => {
-        setImagens(prev => [{ img: novaFoto, title: 'Foto tirada' }, ...prev]);
+        const novasFotos = [...fotos, novaFoto]
+        setFotos(novasFotos)
+        localStorage.setItem("fotos", JSON.stringify(novasFotos))
     };
 
+    const limparGaleria = () => {
+        if (!confirm("Deseja limpar sua galeria?")) return;
+        localStorage.removeItem("fotos");
+        setFotos([]);
+    }
+
     return (
-        <>
+        <main className="main">
             <Camera onFotoTirada={adicionarFoto} />
-            <Box sx={{ width: 500, height: 450, overflowY: 'scroll' }}>
-                <ImageList variant="masonry" cols={3} gap={8}>
-                    {imagens.map((item, index) => (
-                        <ImageListItem key={index}>
-                            <img
-                                src={item.img}
-                                alt={item.title}
-                                loading="lazy"
-                            />
-                        </ImageListItem>
-                    ))}
-                </ImageList>
-            </Box>
-        </>
+            {fotos.lenght > 0 && (<button onClick={limparGaleria}>Limpar Galeria</button>)}
+
+            {/* componentes do MUI */}
+            <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
+                {fotos.map((f, i) => (
+                    <ImageListItem key={i}>
+                        <img
+                            src={f}
+                            alt={`foto ${i + 1}`}
+                            loading="lazy"
+                        />
+                    </ImageListItem>
+                ))}
+            </ImageList>
+
+
+        </main>
     );
 }
