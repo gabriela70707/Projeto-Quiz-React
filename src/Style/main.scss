@@ -1,3 +1,8 @@
+/**
+ * Arquivo principal de estilos
+ * Importa todos os módulos SCSS da aplicação
+ */
+
 @use './variaveis';
 @use './inicial';
 @use './DSGo';
@@ -5,4 +10,6 @@
 @use './missaoCard';
 @use './modal';
 @use './camera';
-@use './galeria_camera'
+@use './galeria_camera';
+@use './inventario';
+@use './geolocalizacao';

@@ -1,84 +1,134 @@
-@use './variaveis' as *;
 
-/* CONTAINER PRINCIPAL */
-.conteiner {
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(8px);
-  padding: 3rem 2rem;
-  border-radius: 20px;
-  color: #dfcaf9;
-  max-width: 1200px;
-  margin: 2rem auto 7rem auto;
-  overflow-y: auto;
-  max-height: 80vh;
-  /* scroll controlado */
+/* Progresso das missões */
+.progresso-missoes {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
 
-  /* scroll estilizado */
-  scrollbar-width: thin;
-  scrollbar-color:$destaque-rosa;
-  &::-webkit-scrollbar {
-    width: 8px;
+  p {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #dfcaf9;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background-color: $destaque-rosa;
-    border-radius: 10px;
+  progress {
+    width: 100%;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    
+    /* Remove estilo padrão */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    /* Fundo da barra */
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 61, 127, 0.5);
+
+    /* Chrome, Safari, Edge */
+    &::-webkit-progress-bar {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+    }
+
+    &::-webkit-progress-value {
+      background: linear-gradient(90deg, #ff3d7f, #e4018d);
+      border-radius: 15px;
+      transition: width 0.3s ease;
+    }
+
+    /* Firefox */
+    &::-moz-progress-bar {
+      background: linear-gradient(90deg, #ff3d7f, #e4018d);
+      border-radius: 15px;
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+/* Melhoria no scroll do container */
+.conteiner {
+  /* Scroll suave */
+  scroll-behavior: smooth;
+
+  /* Oculta scrollbar mas mantém funcionalidade */
+  -ms-overflow-style: none;  /* IE e Edge */
+  scrollbar-width: thin;     /* Firefox */
+
+  /* Webkit (Chrome, Safari) */
+  &::-webkit-scrollbar {
+    width: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff3d7f, #e4018d);
+    border-radius: 10px;
+    
+    &:hover {
+      background: linear-gradient(180deg, #e4018d, #ff3d7f);
+    }
   }
 }
 
-/* TÍTULO */
-.conteiner h2 {
-  text-align: center;
-  margin-bottom: 1rem;
-  font-size: 2rem;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+/* Animação de entrada para cards */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* GRID DE MISSÕES */
-.missoes-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-/* CARD */
 .missao-card {
-  background-color:$card;
-  color: #222;
-  border-radius: 16px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  padding: 1.5rem;
-  min-height: 220px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 18px;
+  animation: fadeInUp 0.4s ease-out backwards;
+  
+  /* Delay baseado na posição */
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.15s; }
+  &:nth-child(4) { animation-delay: 0.2s; }
+  &:nth-child(5) { animation-delay: 0.25s; }
+  &:nth-child(6) { animation-delay: 0.3s; }
 }
 
-.missao-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+/* Responsividade para barra de progresso */
+@media (max-width: 768px) {
+  .progresso-missoes {
+    padding: 1rem;
+
+    p {
+      font-size: 1rem;
+    }
+
+    progress {
+      height: 25px;
+    }
+  }
 }
 
-/* TEXTO */
-.missao-card h3 {
-  font-size: 1.3rem;
-}
+@media (max-width: 480px) {
+  .progresso-missoes {
+    padding: 0.75rem;
 
-.missao-card p {
-  line-height: 1.5;
-}
+    p {
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
 
-.missao-card .conteudo {
-  font-weight: bold;
-  font-size: 1rem;
-  margin-bottom: 0.5rem;
-  color: #6a1b9a;
+    progress {
+      height: 20px;
+    }
+  }
 }
