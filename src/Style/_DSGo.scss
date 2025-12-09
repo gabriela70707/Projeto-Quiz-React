@@ -1,27 +1,91 @@
-body{
+@use './variaveis' as *;
+
+body {
   cursor: url('../assets/cursor.png') 0 0, auto;
 }
 
 .corpo {
-  background-image: url('../assets/jogos.webp'); 
-  background-size: cover; 
-  background-repeat: no-repeat; 
-  background-position: center; 
-  width: 100vw;
-  height: 100vh;
+  background-image: url('../assets/jogos.webp');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed; // Parallax effect
+  min-height: 100vh;
+  width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto; // PERMITE SCROLL VERTICAL
 
+  // Overlay melhorado
   &::before {
     content: "";
-    position: absolute;
+    position: fixed;
     inset: 0;
-    background: #ebe1e11a;
-    backdrop-filter: blur(2.5px); 
+    background: linear-gradient(135deg, 
+      rgba(10, 1, 24, 0.88) 0%, 
+      rgba(45, 27, 78, 0.85) 50%,
+      rgba(26, 15, 46, 0.88) 100%
+    );
+    backdrop-filter: blur(3px);
+    z-index: 0;
   }
 
+  // Efeito de brilho animado
+  &::after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 61, 127, 0.03) 0%,
+      transparent 70%
+    );
+    animation: glow-pulse 8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+
+  // Todo conteúdo acima do overlay
   > * {
     position: relative;
     z-index: 1;
+  }
+}
+
+// Estilo para scroll suave
+html {
+  scroll-behavior: smooth;
+}
+
+// Container principal com scroll
+main {
+  min-height: calc(100vh - 120px); // Deixa espaço para o menu
+  padding-bottom: 140px; // Espaço extra no final
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .corpo {
+    background-attachment: scroll; // Melhor performance em mobile
+  }
+
+  main {
+    padding-bottom: 120px;
   }
 }

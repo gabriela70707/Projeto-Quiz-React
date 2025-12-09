@@ -1,0 +1,200 @@
+@use './variaveis' as *;
+
+// Container principal
+.conteiner {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 150px;
+
+  h2 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    color: $claro;
+    text-shadow: 0 0 10px rgba(255, 61, 127, 0.5);
+  }
+}
+
+// Progresso das missões
+.progresso-missoes {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+
+  p {
+    margin: 0 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #dfcaf9;
+  }
+
+  progress {
+    width: 100%;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(255, 61, 127, 0.5);
+
+    &::-webkit-progress-bar {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+    }
+
+    &::-webkit-progress-value {
+      background: linear-gradient(90deg, #ff3d7f, #e4018d);
+      border-radius: 15px;
+      transition: width 0.3s ease;
+    }
+
+    &::-moz-progress-bar {
+      background: linear-gradient(90deg, #ff3d7f, #e4018d);
+      border-radius: 15px;
+      transition: width 0.3s ease;
+    }
+  }
+}
+
+// Grid de missões
+.missoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+// Card de missão
+.missao-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 1.5rem;
+  border: 2px solid rgba(255, 61, 127, 0.3);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.4s ease-out backwards;
+
+  h3 {
+    font-size: 1.3rem;
+    color: #ff3d7f;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #dfcaf9;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 0.5rem;
+  }
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 61, 127, 0.4);
+    border-color: #ff3d7f;
+  }
+}
+
+// Botão de limpar missões
+.limpar-missoes {
+  display: block;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  
+  &:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+  }
+}
+
+// Animação
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Delays de animação para os cards
+.missao-card {
+  &:nth-child(1) { animation-delay: 0.05s; }
+  &:nth-child(2) { animation-delay: 0.1s; }
+  &:nth-child(3) { animation-delay: 0.15s; }
+  &:nth-child(4) { animation-delay: 0.2s; }
+  &:nth-child(5) { animation-delay: 0.25s; }
+  &:nth-child(6) { animation-delay: 0.3s; }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .conteiner {
+    padding: 1rem;
+    padding-bottom: 120px;
+    
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  .missoes-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .progresso-missoes {
+    padding: 1rem;
+
+    p {
+      font-size: 1rem;
+    }
+
+    progress {
+      height: 25px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .conteiner {
+    padding: 0.5rem;
+    
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .progresso-missoes {
+    padding: 0.75rem;
+
+    p {
+      font-size: 0.9rem;
+    }
+
+    progress {
+      height: 20px;
+    }
+  }
+
+  .missao-card {
+    padding: 1rem;
+    
+    h3 {
+      font-size: 1.1rem;
+    }
+  }
+}

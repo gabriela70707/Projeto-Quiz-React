@@ -1,89 +1,187 @@
+@use './variaveis' as *;
 
-/* Progresso das missões */
+.conteiner {
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 180px; // ESPAÇO PARA O MENU + SCROLL
+  overflow-y: visible; // PERMITE SCROLL
+
+  h2 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #ff3d7f, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 61, 127, 0.5));
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      filter: drop-shadow(0 0 20px rgba(255, 61, 127, 0.5));
+    }
+    50% {
+      filter: drop-shadow(0 0 30px rgba(255, 61, 127, 0.8));
+    }
+  }
+}
+
 .progresso-missoes {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1.5rem;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  padding: 1.75rem;
+  border-radius: 16px;
   margin-bottom: 2rem;
   text-align: center;
+  border: 2px solid rgba(255, 61, 127, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3),
+              inset 0 1px 0 rgba(255, 255, 255, 0.1);
 
   p {
-    margin: 0 0 1rem 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #dfcaf9;
+    margin: 0 0 1.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
   }
 
   progress {
     width: 100%;
-    height: 30px;
-    border-radius: 15px;
+    height: 32px;
+    border-radius: 16px;
     overflow: hidden;
-    
-    /* Remove estilo padrão */
     appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-
-    /* Fundo da barra */
-    background-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.4);
     border: 2px solid rgba(255, 61, 127, 0.5);
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.3);
 
-    /* Chrome, Safari, Edge */
     &::-webkit-progress-bar {
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 15px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 16px;
     }
 
     &::-webkit-progress-value {
-      background: linear-gradient(90deg, #ff3d7f, #e4018d);
-      border-radius: 15px;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #ff3d7f, #a855f7);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 61, 127, 0.6);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Firefox */
     &::-moz-progress-bar {
-      background: linear-gradient(90deg, #ff3d7f, #e4018d);
-      border-radius: 15px;
-      transition: width 0.3s ease;
+      background: linear-gradient(90deg, #ff3d7f, #a855f7);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(255, 61, 127, 0.6);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
   }
 }
 
-/* Melhoria no scroll do container */
-.conteiner {
-  /* Scroll suave */
-  scroll-behavior: smooth;
+.missoes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+  padding-bottom: 2rem; // ESPAÇO EXTRA NO FINAL
+}
 
-  /* Oculta scrollbar mas mantém funcionalidade */
-  -ms-overflow-style: none;  /* IE e Edge */
-  scrollbar-width: thin;     /* Firefox */
+.missao-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 1.75rem;
+  border: 2px solid rgba(255, 61, 127, 0.25);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
 
-  /* Webkit (Chrome, Safari) */
-  &::-webkit-scrollbar {
-    width: 10px;
+  // Brilho de fundo
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 61, 127, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
   }
 
-  &::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 10px;
+  &:hover::before {
+    opacity: 1;
   }
 
-  &::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, #ff3d7f, #e4018d);
-    border-radius: 10px;
-    
+  h3 {
+    font-size: 1.35rem;
+    color: #ffffff;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+  }
+
+  button {
+    width: 100%;
+    padding: 0.875rem;
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(255, 61, 127, 0.4),
+                0 0 60px rgba(168, 85, 247, 0.2);
+    border-color: rgba(255, 61, 127, 0.6);
+  }
+
+  // Card concluído
+  &.concluido {
+    opacity: 0.7;
+    border-color: rgba(168, 85, 247, 0.3);
+
     &:hover {
-      background: linear-gradient(180deg, #e4018d, #ff3d7f);
+      transform: scale(1);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
   }
 }
 
-/* Animação de entrada para cards */
+.limpar-missoes,
+.limpar-inventario {
+  display: block;
+  margin: 0 auto 2rem;
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  padding: 0.75rem 2rem;
+  
+  &:hover {
+    background: linear-gradient(135deg, #991b1b, #7f1d1d);
+    box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
+  }
+}
+
+// Animação de entrada dos cards
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -92,43 +190,68 @@
 }
 
 .missao-card {
-  animation: fadeInUp 0.4s ease-out backwards;
+  animation: fadeInUp 0.5s ease-out backwards;
   
-  /* Delay baseado na posição */
-  &:nth-child(1) { animation-delay: 0.05s; }
-  &:nth-child(2) { animation-delay: 0.1s; }
-  &:nth-child(3) { animation-delay: 0.15s; }
-  &:nth-child(4) { animation-delay: 0.2s; }
-  &:nth-child(5) { animation-delay: 0.25s; }
-  &:nth-child(6) { animation-delay: 0.3s; }
+  @for $i from 1 through 20 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.05}s;
+    }
+  }
 }
 
-/* Responsividade para barra de progresso */
+// Responsividade
 @media (max-width: 768px) {
-  .progresso-missoes {
+  .conteiner {
     padding: 1rem;
+    padding-bottom: 160px;
+    
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .missoes-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .progresso-missoes {
+    padding: 1.25rem;
 
     p {
       font-size: 1rem;
     }
 
     progress {
-      height: 25px;
+      height: 28px;
+    }
+  }
+
+  .missao-card {
+    padding: 1.5rem;
+
+    h3 {
+      font-size: 1.2rem;
     }
   }
 }
 
 @media (max-width: 480px) {
-  .progresso-missoes {
+  .conteiner {
     padding: 0.75rem;
+    padding-bottom: 140px;
+  }
+
+  .progresso-missoes {
+    padding: 1rem;
 
     p {
-      font-size: 0.9rem;
-      margin-bottom: 0.75rem;
+      font-size: 0.95rem;
     }
 
     progress {
-      height: 20px;
+      height: 24px;
     }
   }
 }

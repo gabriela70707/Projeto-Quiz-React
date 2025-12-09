@@ -1,0 +1,125 @@
+@use './variaveis' as *;
+
+.geo-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 180px;
+}
+
+.geo-content {
+  h2 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(135deg, #ff3d7f, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 61, 127, 0.5));
+  }
+}
+
+.geo-form {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 2px solid rgba(255, 61, 127, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+
+  .form-group {
+    margin-bottom: 2rem;
+
+    h3 {
+      font-size: 1.5rem;
+      color: $claro;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .input-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .input-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    label {
+      color: $claro;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .erro-msg {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
+      font-weight: 600;
+    }
+  }
+
+  .btn-location {
+    width: 100%;
+    background: linear-gradient(135deg, #2cd0e5, #2553af);
+    margin-top: 0.5rem;
+
+    &:hover {
+      background: linear-gradient(135deg, #2553af, #1a3d7a);
+    }
+  }
+
+  .btn-calcular {
+    width: 100%;
+    padding: 1.125rem;
+    font-size: 1.125rem;
+    margin-top: 1rem;
+    font-weight: 700;
+  }
+}
+
+.mapa {
+  width: 100%;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 61, 127, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (max-width: 768px) {
+  .geo-container {
+    padding: 1rem;
+    padding-bottom: 160px;
+  }
+
+  .geo-content h2 {
+    font-size: 2rem;
+  }
+
+  .geo-form {
+    padding: 1.5rem;
+
+    .input-row {
+      grid-template-columns: 1fr;
+    }
+
+    .form-group h3 {
+      font-size: 1.3rem;
+    }
+  }
+
+  .mapa {
+    height: 400px;
+  }
+}

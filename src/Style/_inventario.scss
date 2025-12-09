@@ -1,94 +1,95 @@
 @use './variaveis' as *;
 
-
 .inventario {
   padding: 2rem;
   text-align: center;
-  color: #fff;
-  min-height: 100vh;
+  color: $claro;
+  min-height: calc(100vh - 140px);
+  padding-bottom: 180px;
 
   h2 {
-    margin-bottom: 1.5rem;
-    font-size: 2rem;
+    margin-bottom: 2rem;
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    background: linear-gradient(135deg, #ff3d7f, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(255, 61, 127, 0.5));
   }
 
   .vazio {
-    font-size: 1.2rem;
-    color: #ccc;
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 3rem;
   }
 
-  /* Grid responsivo para exibir as figurinhas */
   .grid {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     justify-items: center;
-    margin-top: 15px;
+    margin-top: 2rem;
+    padding-bottom: 2rem;
   }
 
   .figurinha {
-    background: $card;
-    border-radius: 12px;
-    padding: 1rem;
-    box-shadow: 0 0 8px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 2px solid rgba(255, 61, 127, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     width: 100%;
-    max-width: 150px;
-    color:$fundo;
+    max-width: 180px;
+    color: $claro;
 
     &:hover {
-      transform: scale(1.05);
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: 0 12px 40px rgba(255, 61, 127, 0.4);
+      border-color: rgba(255, 61, 127, 0.6);
     }
 
     img {
       width: 100%;
       max-width: 100px;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.75rem;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+      transform: scale(1.1) rotate(5deg);
     }
 
     p {
       margin: 0;
-      font-weight: bold;
+      font-weight: 700;
       font-size: 1rem;
+      color: $claro;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
   }
 }
 
-/* 🔹 Responsividade */
 @media (max-width: 768px) {
   .inventario {
     padding: 1rem;
+    padding-bottom: 160px;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 2rem;
     }
 
     .grid {
-      gap: 0.5rem;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     }
 
     .figurinha {
-      padding: 0.8rem;
+      padding: 1.25rem;
     }
   }
 }
 
-@media (max-width: 480px) {
-  .inventario {
-    h2 {
-      font-size: 1.2rem;
-    }
 
-    .figurinha {
-      max-width: 100px;
-
-      img {
-        max-width: 80px;
-      }
-
-      p {
-        font-size: 0.9rem;
-      }
-    }
-  }
-}

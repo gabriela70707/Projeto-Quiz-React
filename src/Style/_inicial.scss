@@ -1,64 +1,167 @@
 @use './variaveis' as *;
 
-body{
-  cursor: url('../assets/cursor.png') 0 0, auto;
-}
-
 .inicial {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: end;
-  height: 100vh;
-  gap: 20px;
-  background-image: url('../assets/capa.webp'); // ou .png, .webp etc.
-  background-size: cover; // ajusta a imagem para cobrir todo o elemento
-  background-position: center; // centraliza a imagem
+  justify-content: center;
+  min-height: 100vh;
+  gap: 2rem;
+  padding: 2rem;
+  background-image: url('../assets/capa.webp');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
+  position: relative;
+
+  // Overlay escuro para melhor contraste
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, 
+      rgba(10, 1, 24, 0.85) 0%, 
+      rgba(45, 27, 78, 0.85) 50%,
+      rgba(107, 47, 181, 0.75) 100%
+    );
+  }
+
+  // Conteúdo acima do overlay
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 900;
+    text-align: center;
+    background: linear-gradient(135deg, #ff3d7f, #a855f7, #2cd0e5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 80px rgba(255, 61, 127, 0.5);
+    animation: float 3s ease-in-out infinite;
+    letter-spacing: 0.05em;
+  }
+
+  p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    text-align: center;
+    max-width: 600px;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    line-height: 1.8;
+  }
 
   .entrar {
     background-image: url('../assets/botao.png');
-    background-size: cover; // cobre todo o botão
-    color: #000000;
-    padding: 15px 40px;
+    background-size: cover;
+    background-position: center;
+    color: #ffffff;
+    padding: 1.25rem 3rem;
     border: none;
-    
-    font-size: 1.2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: 800;
     cursor: pointer;
-    box-shadow: $sombrasBox;
-    justify-content: center;
-    margin-bottom: 7vh;
-    width: 18vw;
+    box-shadow: 0 8px 32px rgba(255, 61, 127, 0.4);
+    width: auto;
+    min-width: 240px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    &:hover::before {
+      width: 400px;
+      height: 400px;
+    }
 
     &:hover {
-      transform: scale(1.05);
-      background-image: url('../assets/botao.png');
-      background-size: cover; // cobre todo o botão
-      background-position: center; // centraliza a imagem
-      background-repeat: no-repeat; // evita repetição
-      color: #04010f;
+      transform: scale(1.08) translateY(-4px);
+      box-shadow: 0 12px 48px rgba(255, 61, 127, 0.6),
+                  0 0 60px rgba(168, 85, 247, 0.4);
+    }
+
+    &:active {
+      transform: scale(1.02) translateY(-2px);
     }
 
     &:focus {
-      outline: 3px solid #ffd700;
-      outline-offset: 3px;
-    }
-
-
-
-
-  }
-
-  @media (max-width: 768px) {
-    h1 {
-      font-size: 2rem; // título menor em tablet
-    }
-
-    p {
-      font-size: 1rem;
+      outline: 4px solid rgba(255, 61, 127, 0.5);
+      outline-offset: 4px;
     }
   }
 
+  // Animação de flutuação
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
 
+  // Partículas de fundo (opcional)
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20% 30%, white, transparent),
+      radial-gradient(2px 2px at 60% 70%, white, transparent),
+      radial-gradient(1px 1px at 50% 50%, white, transparent),
+      radial-gradient(1px 1px at 80% 10%, white, transparent),
+      radial-gradient(2px 2px at 90% 60%, white, transparent);
+    background-size: 200% 200%;
+    animation: stars 20s linear infinite;
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  @keyframes stars {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100% 100%;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .inicial {
+    padding: 1rem;
+
+    .entrar {
+      min-width: 200px;
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .inicial {
+    .entrar {
+      min-width: 180px;
+      padding: 0.875rem 1.5rem;
+      font-size: 1.125rem;
+    }
+  }
 }

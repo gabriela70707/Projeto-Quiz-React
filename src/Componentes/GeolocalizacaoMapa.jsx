@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import 'leaflet-routing-machine';
-import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
+
+// Fix do ícone do Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+});
 
 export function GeolocalizacaoMapa() {
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
-  const routeControlRef = useRef(null);
+  const markersRef = useRef([]);
 
   const [coordenadas, setCoordenadas] = useState({
     origemLat: '',
@@ -18,7 +24,6 @@ export function GeolocalizacaoMapa() {
 
   const [erros, setErros] = useState({});
 
-  // Inicializa o mapa apenas uma vez
   useEffect(() => {
     if (!mapInstanceRef.current && mapRef.current) {
       mapInstanceRef.current = L.map(mapRef.current).setView([-22.8747, -47.0655], 13);
@@ -63,33 +68,39 @@ export function GeolocalizacaoMapa() {
       return;
     }
 
-    // Remove rota anterior se existir
-    if (routeControlRef.current && mapInstanceRef.current) {
-      mapInstanceRef.current.removeControl(routeControlRef.current);
-      routeControlRef.current = null;
-    }
+    // Remove marcadores anteriores
+    markersRef.current.forEach(marker => marker.remove());
+    markersRef.current = [];
 
-    const origem = L.latLng(
-      parseFloat(coordenadas.origemLat),
-      parseFloat(coordenadas.origemLng)
-    );
+    const origemLat = parseFloat(coordenadas.origemLat);
+    const origemLng = parseFloat(coordenadas.origemLng);
+    const destinoLat = parseFloat(coordenadas.destinoLat);
+    const destinoLng = parseFloat(coordenadas.destinoLng);
+
+    // Adiciona marcadores
+    const markerOrigem = L.marker([origemLat, origemLng])
+      .addTo(mapInstanceRef.current)
+      .bindPopup('Origem');
     
-    const destino = L.latLng(
-      parseFloat(coordenadas.destinoLat),
-      parseFloat(coordenadas.destinoLng)
-    );
+    const markerDestino = L.marker([destinoLat, destinoLng])
+      .addTo(mapInstanceRef.current)
+      .bindPopup('Destino');
 
-    routeControlRef.current = L.Routing.control({
-      waypoints: [origem, destino],
-      show: false,
-      addWaypoints: false,
-      draggableWaypoints: false,
-      lineOptions: {
-        styles: [{ color: '#ff3d7f', weight: 4 }]
-      }
-    }).addTo(mapInstanceRef.current);
+    markersRef.current.push(markerOrigem, markerDestino);
 
-    mapInstanceRef.current.setView(origem, 13);
+    // Adiciona linha entre pontos
+    const linha = L.polyline(
+      [[origemLat, origemLng], [destinoLat, destinoLng]], 
+      { color: '#ff3d7f', weight: 4 }
+    ).addTo(mapInstanceRef.current);
+
+    markersRef.current.push(linha);
+
+    // Ajusta o zoom para mostrar ambos os pontos
+    mapInstanceRef.current.fitBounds([
+      [origemLat, origemLng],
+      [destinoLat, destinoLng]
+    ]);
   };
 
   const usarLocalizacaoAtual = () => {

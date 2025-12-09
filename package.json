@@ -1,72 +1,31 @@
 {
   "name": "dsgo-game",
   "version": "1.0.0",
-  "description": "Jogo educacional DS Go com missões, geolocalização e câmera",
   "type": "module",
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "build": "webpack --mode production",
-    "preview": "webpack serve --mode production",
-    "lint": "eslint src --ext js,jsx",
-    "format": "prettier --write \"src/**/*.{js,jsx,css,scss}\"",
-    "analyze": "webpack-bundle-analyzer dist/stats.json"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint ."
   },
-  "keywords": [
-    "react",
-    "game",
-    "education",
-    "geolocation",
-    "camera"
-  ],
-  "author": "Seu Nome",
-  "license": "MIT",
   "dependencies": {
-    "@mui/material": "^5.15.0",
-    "@mui/icons-material": "^5.15.0",
-    "@emotion/react": "^11.11.3",
-    "@emotion/styled": "^11.11.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.21.0"
+    "@mui/material": "^5.16.7",
+    "@mui/icons-material": "^5.16.7",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.7",
-    "@babel/preset-env": "^7.23.7",
-    "@babel/preset-react": "^7.23.3",
-    "@babel/plugin-transform-runtime": "^7.23.7",
-    "autoprefixer": "^10.4.16",
-    "babel-loader": "^9.1.3",
-    "css-loader": "^6.9.0",
-    "css-minimizer-webpack-plugin": "^5.0.1",
-    "html-webpack-plugin": "^5.6.0",
-    "mini-css-extract-plugin": "^2.7.7",
-    "postcss": "^8.4.33",
-    "postcss-loader": "^7.3.4",
-    "sass": "^1.69.7",
-    "sass-loader": "^13.3.3",
-    "style-loader": "^3.3.4",
-    "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1",
-    "webpack-bundle-analyzer": "^4.10.1",
-    "eslint": "^8.56.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "prettier": "^3.1.1"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.2",
+    "sass": "^1.77.8",
+    "eslint": "^9.9.1",
+    "eslint-plugin-react": "^7.35.0",
+    "eslint-plugin-react-hooks": "^5.1.0-rc.0",
+    "eslint-plugin-react-refresh": "^0.4.11"
   }
 }

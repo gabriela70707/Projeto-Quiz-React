@@ -4,19 +4,10 @@ import { MissaoCard } from '../Componentes/MissaoCard';
 import { MissaoModal } from '../Componentes/MissaoModal';
 import { adicionarFigurinhaAoInventario } from '../Dados/dadosFigurinhas';
 
-/**
- * Componente Missão
- * Gerencia a exibição e conclusão de missões
- * Integra com sistema de inventário para recompensas
- * Persiste progresso em localStorage
- */
 export function Missao() {
   const [missaoSelecionada, setMissaoSelecionada] = useState(null);
   const [missoesConcluidas, setMissoesConcluidas] = useState([]);
 
-  /**
-   * Carrega missões concluídas do localStorage na montagem
-   */
   useEffect(() => {
     try {
       const salvas = localStorage.getItem("missoesConcluidas");
@@ -28,9 +19,6 @@ export function Missao() {
     }
   }, []);
 
-  /**
-   * Salva missões concluídas no localStorage sempre que mudam
-   */
   useEffect(() => {
     if (missoesConcluidas.length > 0) {
       try {
@@ -41,53 +29,41 @@ export function Missao() {
     }
   }, [missoesConcluidas]);
 
-  /**
-   * Marca missão como concluída e verifica recompensas
-   * @param {number} id - ID da missão concluída
-   */
   const concluirMissao = (id) => {
-    // Adiciona missão às concluídas
     setMissoesConcluidas((prev) => {
       if (prev.includes(id)) return prev;
       return [...prev, id];
     });
 
-    // Fecha modal
     setMissaoSelecionada(null);
-
-    // Verifica se ganhou figurinha
     verificarRecompensas(id);
   };
 
-  /**
-   * Verifica se o jogador ganhou alguma figurinha
-   * Baseado na quantidade de missões concluídas por tipo
-   * @param {number} missaoId - ID da última missão concluída
-   */
   const verificarRecompensas = (missaoId) => {
-    const missao = missoes.find(m => m.id === missaoId);
-    if (!missao) return;
-
     const totalConcluidas = missoesConcluidas.length + 1;
 
-    // Recompensas baseadas em quantidade total de missões
     if (totalConcluidas === 5) {
-      adicionarFigurinhaAoInventario(1); // Mestre Frontend
+      adicionarFigurinhaAoInventario(1);
     } else if (totalConcluidas === 10) {
-      adicionarFigurinhaAoInventario(2); // Expert Backend
+      adicionarFigurinhaAoInventario(2);
     } else if (totalConcluidas === 15) {
-      adicionarFigurinhaAoInventario(3); // Guardião de Dados
+      adicionarFigurinhaAoInventario(3);
     } else if (totalConcluidas === 20) {
-      adicionarFigurinhaAoInventario(4); // Testador Elite
-      adicionarFigurinhaAoInventario(5); // Conhecedor DS
+      adicionarFigurinhaAoInventario(4);
+      adicionarFigurinhaAoInventario(5);
     }
+  };
+
+  const limparMissoes = () => {
+    if (!window.confirm("Deseja realmente limpar todas as missões concluídas?")) return;
+    localStorage.removeItem("missoesConcluidas");
+    setMissoesConcluidas([]);
   };
 
   return (
     <section className='conteiner'>
       <h2>Missões</h2>
       
-      {/* Contador de progresso */}
       <div className="progresso-missoes">
         <p>
           Missões Concluídas: {missoesConcluidas.length} / {missoes.length}
@@ -99,7 +75,10 @@ export function Missao() {
         />
       </div>
 
-      {/* Grid de missões */}
+      <button className="limpar-missoes" onClick={limparMissoes}>
+        Limpar Progresso
+      </button>
+
       <div className="missoes-grid">
         {missoes.map((m) => (
           <MissaoCard
@@ -111,7 +90,6 @@ export function Missao() {
         ))}
       </div>
 
-      {/* Modal de missão ativa */}
       {missaoSelecionada && (
         <MissaoModal 
           missao={missaoSelecionada} 
